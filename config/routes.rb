@@ -1,7 +1,14 @@
 SwBackend::Application.routes.draw do
 
+  devise_for :users, skip: [ :sessions ]
+  as :user do
+    post '/api/login' => 'sessions#create'
+    delete '/api/logout' => 'sessions#destroy'
+  end
+
   namespace :api do
     resources :edges, only: [:index]
+    resources :users, only: [:index]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
